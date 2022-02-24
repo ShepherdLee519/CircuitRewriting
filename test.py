@@ -1,14 +1,9 @@
-from PatternMatching import PatternMatching
-from ReplaceSubgraph import ReplaceSubgraph
+from CircuitWriter import CircuitWriter
 
-data_path = './data/origin/example5.qasm'
-pattern_path = './data/pattern/pattern5.qasm'
-substitute_path = './data/pattern/substitute5.qasm'
+data_path = './data/origin/example3.qasm'
+pattern_path = './data/pattern/pattern3.json'
 
 
-# # Algorithm 1: return mapping list M
-mappingList = PatternMatching(data_path, pattern_path)
-
-# # Algorithm 2: return rewritten graph Gr
-rewrittenGraph = ReplaceSubgraph(data_path, substitute_path, mappingList)
-rewrittenGraph.saveQASM('result.qasm')
+circuitWriter = CircuitWriter()
+result = circuitWriter.execute(data_path, pattern_path)
+result.saveQASM('result.qasm')
