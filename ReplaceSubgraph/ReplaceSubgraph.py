@@ -1,5 +1,4 @@
 import copy
-from ntpath import realpath
 from DS.base.Edge import Edge
 from DS.graph import DAGGraph
 from DS.limit import MAX_QUBITS_NUM
@@ -38,9 +37,10 @@ def MatchedGraph(originGraph, M):
 
 def InstantiateGraph(patternGraph, matchedGraph, substitutionGraph, M):
     # will update qubits/gates/edges
-    substitutionGraph.reindex(patternGraph, matchedGraph, M)
+    adjustSubstitutionGraph = copy.deepcopy(substitutionGraph)
+    adjustSubstitutionGraph.reindex(patternGraph, matchedGraph, M)
 
-    return substitutionGraph
+    return adjustSubstitutionGraph
 
 
 def ComputeSio(substitutionGraph):
@@ -152,7 +152,8 @@ def ReplaceSubgraph(data_path, substitute_path, mappingList):
         ok, matchedGraph = MatchedGraph(replacedGraph, M)
         if not ok:
             continue
-        substitutionGraph = InstantiateGraph(patternGraph, matchedGraph, substitutionGraph, M)
+
+        adjustedSubstitutionGraph = InstantiateGraph(patternGraph, matchedGraph, substitutionGraph, M)
 
         # Step 1. compute Tin/Tout before modify graph
         Tin, Tout = ComputeTio(replacedGraph, matchedGraph)
@@ -163,22 +164,22 @@ def ReplaceSubgraph(data_path, substitute_path, mappingList):
 
         ## Step 2.2 Calculate Cr + Gs(replacedGraph + substitutionGraph)
         minIndex = min(matchedGraph.gates.keys())
-        substitutionGraph.addIndexOffset(minIndex)
-        replacedGraph = replacedGraph + substitutionGraph
+        adjustedSubstitutionGraph.addIndexOffset(minIndex)
+        replacedGraph = replacedGraph + adjustedSubstitutionGraph
 
         ## Step 2.3 compute Sin/Sout and adjust Tout after modifying
-        Sin, Sout = ComputeSio(substitutionGraph)
+        Sin, Sout = ComputeSio(adjustedSubstitutionGraph)
         # adjust Tout
-        Tout = adjustTout(Tout, minIndex, offset=len(substitutionGraph.gates))
-        adjustMappingList(mappingList, i + 1, minIndex, offset=len(substitutionGraph.gates))
+        Tout = adjustTout(Tout, minIndex, offset=len(adjustedSubstitutionGraph.gates))
+        adjustMappingList(mappingList, i + 1, minIndex, offset=len(adjustedSubstitutionGraph.gates))
 
         # Step 3. add new edges
         for qubit in matchedGraph.qubits:
-            if qubit in substitutionGraph.qubits:
+            if qubit in adjustedSubstitutionGraph.qubits:
                 if Tin[qubit] != -1:
                     replacedGraph.addEdge(
                         MakeEdge(
-                            substitutionGraph.gates[Sin[qubit]],
+                            adjustedSubstitutionGraph.gates[Sin[qubit]],
                             replacedGraph.gates[Tin[qubit]]
                         )
                     ) # MakeEdge(Sin[q], Tin[q])
@@ -186,7 +187,7 @@ def ReplaceSubgraph(data_path, substitute_path, mappingList):
                 if Tout[qubit] != -1:
                     replacedGraph.addEdge(
                         MakeEdge(
-                            substitutionGraph.gates[Sout[qubit]],
+                            adjustedSubstitutionGraph.gates[Sout[qubit]],
                             replacedGraph.gates[Tout[qubit]]
                         )
                     ) # MakeEdge(Sout[q], Tout[q])

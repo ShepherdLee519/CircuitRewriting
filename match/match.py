@@ -271,6 +271,8 @@ def generateGraph(M:M_,e1,e2,f1,f2):
     vf2.getsub().constrGraph(f2)
     originaledges = vf2.getoriginal().curESet(0)
     subedges = vf2.getsub().curESet(0)
+
+    M.Msem[0] = []
     for i in range(len(originaledges)):
         va1 = originaledges[i].source
         va2 = originaledges[i].target
@@ -279,6 +281,7 @@ def generateGraph(M:M_,e1,e2,f1,f2):
             M.Msem[0].append(originaledges[i])
             out1.write('e %s %s %s\n' % (int(va1), int(va2), originaledges[i].label))
 
+    M.Msem[1] = []
     for i in range(len(subedges)):
 
         va1 = subedges[i].source

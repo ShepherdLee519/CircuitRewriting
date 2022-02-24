@@ -27,4 +27,4 @@ def reCheckM(mappingList, data_path, pattern_path):
         if flag:
             filteredMappingList.append(mapping)
 
-    return filteredMappingList, patternGraph
+    return filteredMappingList[::2], patternGraph

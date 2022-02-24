@@ -156,14 +156,14 @@ class Vf:
             #print("len(v1Pre) > len(v2Pre)!"
             return False
                 
-        for pre in v1Pre:
-            if result[pre] not in v2Pre:
-                #print("v1Pre not in v2Pre!")
-                return False
-            for el in self.edgeLabel(i, int(pre), int(v1), 0):
-                v2labels=self.edgeLabel(j, result[pre], v2, 1)
-                if self.labelmapping(msem, el, 1) not in v2labels:
-                    return False
+        # for pre in v1Pre:
+        #     if result[pre] not in v2Pre:
+        #         #print("v1Pre not in v2Pre!")
+        #         return False
+        #     for el in self.edgeLabel(i, int(pre), int(v1), 0):
+        #         v2labels=self.edgeLabel(j, result[pre], v2, 1)
+        #         if self.labelmapping(msem, el, 1) not in v2labels:
+        #             return False
 
 
 
@@ -172,13 +172,13 @@ class Vf:
             print("len(v1Succ) > len(v2Succ)!")
             return False
                 
-        for succ in v1Succ:
-            vertex = self.__sub.curVSet(i)[succ]
-            edge = self.edgeLabel(i, int(v1), int(succ), 0)
-            flag = self.isMatchInV2Succ(j, vertex, edge, v2, v2Succ, msem)
-            if not flag:
-                print("not self.isMatchInV2Succ()")
-                return False
+        # for succ in v1Succ:
+        #     vertex = self.__sub.curVSet(i)[succ]
+        #     edge = self.edgeLabel(i, int(v1), int(succ), 0)
+        #     flag = self.isMatchInV2Succ(j, vertex, edge, v2, v2Succ, msem)
+        #     if not flag:
+        #         print("not self.isMatchInV2Succ()")
+        #         return False
 
 
         

@@ -1,5 +1,4 @@
 from copy import deepcopy
-from msilib.schema import Error
 from match.graph import GraphSet
 from match.match import readQasm
 from DS.limit import MAX_QUBITS_NUM
@@ -32,17 +31,22 @@ class DAGGraph:
 
         # Step 0. prepare qubitsMap
         qubitsMap = {}
+        indices = sorted(list(matchedGraph.gates.keys()))
+        matchedGraphGates = {}
+        for index in indices:
+            matchedGraphGates[index] = matchedGraph.gates[index]
         for patternGate, matchedGate in \
-            zip(patternGraph.gates.values(), matchedGraph.gates.values()):
+            zip(patternGraph.gates.values(), matchedGraphGates.values()):
             for patternQubit, matchedQubit in \
                 zip(patternGate.qlist, matchedGate.qlist):
                 qubitsMap[patternQubit] = matchedQubit
-        
+
         # Step 1. change gates
         for gate in self.gates.values():
             qlist = []
             for qubit in gate.qlist:
                 qlist.append(qubitsMap[qubit])
+            
             gate.qlist = qlist
 
             if len(qlist) == 2:

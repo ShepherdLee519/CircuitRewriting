@@ -1,9 +1,9 @@
 from PatternMatching import PatternMatching
 from ReplaceSubgraph import ReplaceSubgraph
 
-data_path = './data/origin/example3.qasm'
-pattern_path = './data/pattern/pattern3.qasm'
-substitute_path = './data/pattern/substitute3.qasm'
+data_path = './data/origin/example5.qasm'
+pattern_path = './data/pattern/pattern5.qasm'
+substitute_path = './data/pattern/substitute5.qasm'
 
 
 # # Algorithm 1: return mapping list M
