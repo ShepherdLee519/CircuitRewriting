@@ -1,9 +1,10 @@
 from CircuitWriter import CircuitWriter
 
-data_path = './data/origin/example3.qasm'
-pattern_path = './data/pattern/pattern3.json'
+# data_path = './data/origin/example5.qasm'
+data_path = './data/origin/'
+pattern_path = './data/pattern/'
+output_path = './data/result/'
 
 
 circuitWriter = CircuitWriter()
-result = circuitWriter.execute(data_path, pattern_path)
-result.saveQASM('result.qasm')
+circuitWriter.execute(data_path, pattern_path, output_path)
