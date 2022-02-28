@@ -1,6 +1,6 @@
 ## 调用方法
 
- ```python
+```python
 from CircuitWriter import CircuitWriter
 
 data_path = './data/origin/example.qasm'
@@ -10,8 +10,8 @@ pattern_path = './data/pattern/pattern.json'
 circuitWriter = CircuitWriter()
 result = circuitWriter.execute(data_path, pattern_path)
 result.saveQASM('result.qasm')
- ```
- 
+```
+
 ## 实例
 
 ### 1. pattern: CX CX => _
