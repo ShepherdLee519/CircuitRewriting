@@ -1,7 +1,7 @@
 from CircuitWriter import CircuitWriter
 
 # data_path = './data/origin/'
-data_path = './data/benchmark/test/'
+data_path = './data/benchmark/'
 pattern_path = './data/pattern/'
 output_path = './data/result/'
 
