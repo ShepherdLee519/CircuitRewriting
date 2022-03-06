@@ -1,0 +1,1 @@
+MAX_QUBITS_NUM = 32
