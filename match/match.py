@@ -72,7 +72,7 @@ def readQasm( path,outpath):
     pre_result = outpath
     file = open(pre_result, mode='w+')
     file.write('t # 0\n')
-    for i in range(20):
+    for i in range(500):
         last_layer.append(-1)
         last_position.append(-1)
     while True:
