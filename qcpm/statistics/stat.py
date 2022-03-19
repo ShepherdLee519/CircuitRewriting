@@ -1,4 +1,5 @@
 import time
+from os.path import dirname, basename
 
 from qcpm.statistics.create import create
 from qcpm.statistics.addrow import addRow
@@ -13,12 +14,19 @@ class StatReporter:
             self._state = True
 
         # csv file's name:
-        # eg. 2022-03-07_20.50.50
-        name = time.strftime('%Y-%m-%d_%H.%M.%S', time.localtime(time.time()))
+        name = self.initCSVName(**kwargs)
         self.path = f'{path}{name}.csv'
         self.metric = kwargs.get('metric', 'cycle')
 
         create(self.path, self.metric)
+
+    def initCSVName(self, *, metric, folder):
+        # %d%m_dirname_[optimize]_[strategy]_[systems]_[metric]
+        timestamp = time.strftime('%d%m', time.localtime(time.time()))
+
+        name = basename(dirname(folder))
+
+        return f'{timestamp}_{name}_{metric}'
 
     def add(self, filename, circuitInfos, time):
         if self._state == False:

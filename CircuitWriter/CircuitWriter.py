@@ -56,7 +56,7 @@ class CircuitWriter:
 
     def execute(self, data_path, pattern_path, output_path, *, stat_path=None, metric='cycle'):
         if stat_path != None and self.reporter == None:
-            self.reporter = StatReporter(stat_path, metric=metric)
+            self.reporter = StatReporter(stat_path, metric=metric, folder=data_path)
 
         if isdir(data_path):
             for file_path in listdir(data_path):
